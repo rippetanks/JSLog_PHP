@@ -1,0 +1,102 @@
+<!--
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<html>
+  <head>
+    <title>Test JSLog</title>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous">
+    </script>
+
+    <script type="text/javascript" src="JSLog.min.js"></script>
+  </head>
+  <body>
+
+    <div id="result" style="height: 30px;"></div>
+
+    <button onclick="sendTrace()">Send Trace</button>
+    <button onclick="sendDebug()">Send Debug</button>
+    <button onclick="sendInfo()">Send Info</button>
+    <button onclick="sendWarn()">Send Warn</button>
+    <button onclick="sendError()">Send Error</button>
+    <button onclick="sendFatal()">Send Fatal</button>
+
+    <br><br>
+
+    <button onclick="JSLog.enableCache(2)">Enable cache 2</button>
+    <button onclick="JSLog.enableCache(3)">Enable cache 3</button>
+    <button onclick="JSLog.disableCache()">Disable cache</button>
+
+    <div style="height: 30px; padding-top: 10px;">
+      <span id="cacheInfo">0</span> items in cache
+    </div>
+
+    <script>
+      let cache_info = 0;
+
+      window.onbeforeunload = function() {
+        JSLog.flush();
+        return null;
+      };
+
+      JSLog.init({
+        //url: './test_mysqli_oop.php',
+        //url: './test_mysqli_procedural.php',
+        url: './test_mysqli_pdo.php',
+        entity: 1,
+        log_key: 'b7992cbc2d84460fba4627861171ea33',
+        console_override: true,
+        enable_internal_log: true,
+        callback_error: function(xhr, response, message) {
+          alert(xhr.status);
+        },
+        callback_success: function(data, response, xhr) {
+          // console.log('CIAO'); don't do this with this config
+        }
+      });
+
+      function sendTrace() {
+        $.when(JSLog.trace('Test TRACE')).done(function() {
+          $('#result').text('TRACE sent!');
+          $('#cacheInfo').text(JSLog.cacheSize());
+        });
+      }
+      function sendDebug() {
+        $.when(JSLog.debug('Test DEBUG')).done(function() {
+          $('#result').text('DEBUG sent!');
+          $('#cacheInfo').text(JSLog.cacheSize());
+        });
+      }
+      function sendInfo() {
+        $.when(JSLog.info('Test INFO')).done(function() {
+          $('#result').text('INFO sent!');
+          $('#cacheInfo').text(JSLog.cacheSize());
+        });
+      }
+      function sendWarn() {
+        $.when(JSLog.warn('Test WARN')).done(function() {
+          $('#result').text('WARN sent!');
+          $('#cacheInfo').text(JSLog.cacheSize());
+        });
+      }
+      function sendError() {
+        $.when(JSLog.error('Test ERROR')).done(function() {
+          $('#result').text('ERROR sent!');
+          $('#cacheInfo').text(JSLog.cacheSize());
+        });
+      }
+      function sendFatal() {
+        $.when(JSLog.fatal('Test FATAL')).done(function() {
+          $('#result').text('FATAL sent!');
+          $('#cacheInfo').text(JSLog.cacheSize());
+        });
+      }
+    </script>
+
+  </body>
+</html>
