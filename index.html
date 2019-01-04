@@ -14,6 +14,7 @@
     </script>
 
     <script type="text/javascript" src="JSLog.min.js"></script>
+    <!--<script type="text/javascript" src="JSLog.js"></script>-->
   </head>
   <body>
 
@@ -45,13 +46,15 @@
       };
 
       JSLog.init({
-        //url: './test_mysqli_oop.php',
-        //url: './test_mysqli_procedural.php',
-        url: './test_mysqli_pdo.php',
+        //url_log: './test_mysqli_oop.php',
+        //url_log: './test_mysqli_procedural.php',
+        url_log: './test_lib_pdo.php',
+        url_profile: './test_profile.php',
         entity: 1,
         log_key: 'b7992cbc2d84460fba4627861171ea33',
-        console_override: true,
+        console_override: false,
         enable_internal_log: true,
+        enable_profile: true,
         callback_error: function(xhr, response, message) {
           alert(xhr.status);
         },
@@ -59,6 +62,12 @@
           // console.log('CIAO'); don't do this with this config
         }
       });
+
+      let start = JSLog.profile();
+      setTimeout(function() {
+        JSLog.profile(start, 'TEST');
+        console.log('Profile!');
+      }, 1000);
 
       function sendTrace() {
         $.when(JSLog.trace('Test TRACE')).done(function() {
