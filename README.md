@@ -1,4 +1,4 @@
-# PHP_example_JSLog
+# JSLog_PHP
 
 Example of a PHP backend for the JSLog library.
 
