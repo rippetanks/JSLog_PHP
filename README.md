@@ -2,6 +2,8 @@
 
 Simple library with example for JSLog backend in Java.
 
+Compatible with JSLog version 1.1.*
+
 See [JSLog](https://github.com/rippetanks/JSLog).
 
 ### Getting Started
